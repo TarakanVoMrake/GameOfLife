@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Life</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header class = "bar">
+        <h1>GAME OF LIFE</h1>
+    </header>
+    <section class = "container">
+        <div class = "canvas">
+            <canvas id="canvas" width="500" height="500"></canvas>
+        </div>
+        <div class = "menu-parameter">
+            <div class="menu">
+                <h2>MENU</h2>
+                <div class="setting" id = "color-cell">
+                    <label for="color">Cell color :  </label>
+                    <input type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
+                </div>
+            </div>
+            <div class = "buttons">
+                <button onclick="play()">Play</button>
+                <button onclick="stop()">Stop</button>
+                <button onclick="generateField()" class="">Random</button>
+            </div>
+        </div>
+    </section>
+    <script src="./js/script.js"></script>
+</body>
+</html> 

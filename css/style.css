@@ -1,0 +1,118 @@
+/* Styles for page */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+    height: 100vh;
+}
+
+/* Header Styles */
+header.bar {
+    padding: 0 30px;
+    background-color: #333333;
+
+    text-align: center;
+    color: white;
+
+    border-radius: 10px;
+    
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2em;
+}
+
+/* Container for canvas and menu */
+.container {
+    padding: 15px;
+    display: flex;
+    gap: 20px;
+}
+
+/* CANVAS Style */
+.canvas {
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    background-color: #bbbbbb;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* MENU Style*/
+.menu-parameter {
+    width: 200px;
+    padding: 20px;
+    background-color: #f9f9f9;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.menu-parameter h2 {
+    text-align: center;
+    color: #333333;
+}
+
+.menu {
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.setting {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* COLORS Style*/
+.color-input {
+    height: 50px;
+    width: 48px;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    cursor: pointer;
+}
+
+.color-input::-webkit-color-swatch{
+    border: 1px solid #000000;
+    border-radius: 10px;
+}
+
+/* BUTTONS Style*/
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+}
+.buttons button {
+    padding: 10px 20px;
+    border-radius: 5px;
+
+    border: none;
+    background-color: #333;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* p {
+    word-wrap: break-word;
+    word-break: break-all;
+} */
