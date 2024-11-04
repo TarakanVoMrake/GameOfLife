@@ -21,11 +21,27 @@
                     <label for="color">Cell color :  </label>
                     <input type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
                 </div>
+                <div class="setting" id = "size-field">
+                    <label for="slider">Size:</label>
+                    <input type="range" min="5" max="50" step="1" value="20" oninput="setSize(this)">
+                </div>
+                <div class="setting" id = "interval-cell">
+                    <label for="slider">Speed:</label>
+                    <input type="range" min="0" max="7" step="1" value="3" oninput="setSpeed(this)">
+                </div>
+                <!-- TO DO -->
+                <!-- <div class="setting" id = "interval-cell">
+                    <input type="range" id="slider" min="1" max="10" step="1" value="1">
+                    <input type="number" id="output" min="1" max="10" step="1" value="1">
+                </div> -->
+
             </div>
             <div class = "buttons">
                 <button onclick="play()">Play</button>
                 <button onclick="stop()">Stop</button>
-                <button onclick="generateField()" class="">Random</button>
+                <button onclick="generateRandomField()">Random</button>
+                <button onclick="clearField()" class="">Clear</button>
+                <button onclick="print()">Info</button>
             </div>
         </div>
     </section>

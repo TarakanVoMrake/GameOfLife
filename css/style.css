@@ -14,6 +14,7 @@ body {
 
 /* Header Styles */
 header.bar {
+    margin-top: 15px;
     padding: 0 30px;
     background-color: #333333;
 
@@ -49,7 +50,7 @@ h1 {
 
 /* MENU Style*/
 .menu-parameter {
-    width: 200px;
+    width: 400px;
     padding: 20px;
     background-color: #f9f9f9;
 

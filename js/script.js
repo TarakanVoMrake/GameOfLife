@@ -6,6 +6,8 @@ let lengthCells = sizeCanvas / sizeField;
 let field = [];
 let newField = [];
 let living = false;
+const stepsInterval = [2000, 1000, 500, 250, 125, 60, 40, 20];
+let stepInterval = stepsInterval[3];
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext("2d");
@@ -21,8 +23,6 @@ console.log(dpr);
 // Задаем размер канваса с учетом плотности пикселей
 canvas.width = sizeCanvas * dpr;
 canvas.height = sizeCanvas * dpr;
-console.log(canvas.width);
-console.log(canvas.height);
 // Задаем размеры, чтобы они оставались sizeCanvas x sizeCanvas
 canvas.style.width = String(sizeCanvas)+ "px"; 
 canvas.style.height = String(sizeCanvas) + "px";
@@ -30,12 +30,9 @@ canvas.style.height = String(sizeCanvas) + "px";
 context.scale(dpr, dpr);
 
 
-generateField();
+generateRandomField();
 
-function generateField () {
-    random();
-    drawField();
-}
+
 
 // Рисуем
 function drawField() {
@@ -53,14 +50,6 @@ function drawField() {
                     lengthCells
                 );
             }
-            // if ((i + j) % 3 !== 1) {
-            //     context.fillRect(
-            //                 i * lengthCells,
-            //                 j * lengthCells,
-            //                 lengthCells,
-            //                 lengthCells
-            //             );
-            // }
         }
     }
 };
@@ -68,7 +57,7 @@ function drawField() {
 //Play button
 function play () {
     console.log("Play\n");    
-    if (!living) living = setInterval(step, 100);
+    if (!living) living = setInterval(step, stepInterval);
 }
 
 //Stop button
@@ -78,9 +67,27 @@ function stop () {
     living = false;
 }
 
+function generateRandomField () {
+    stop();
+    random();
+    drawField();
+}
+
+function clearField () {
+    clearInterval(living);
+    living = false;
+    for (let i = 0; i < sizeField; i++) {
+        for (let j = 0; j < sizeField; j++) {
+            field[i][j] = 0;
+        }
+    }
+
+    drawField();
+}
+
 //step
 function step () {
-    console.log("Step\n");
+    console.log("Step");
     
     for (let i = 0; i < sizeField; i++) {
         newField[i] = [];
@@ -95,9 +102,10 @@ function step () {
 
 //Make random field
 function random () {
-    clearInterval(living);
-    living = false;
-
+    console.log("Random");
+    
+    field = [];
+    newField = [];
     for (let i = 0; i < sizeField; i++) {
         field[i] = []
         for (let j = 0; j < sizeField; j++) {
@@ -107,48 +115,105 @@ function random () {
                 field[i][j] = 0;
             }
         }
-    }
+    }    
 }
 
-function checkNeighbors(i, k) {
-    if (field[i][k] === 1) {
+function checkNeighbors(i, j) {
+    if (field[i][j] === 1) {
         let countAliveNeighbors = 
-            field[(i - 1 + sizeField) % sizeField][(k - 1 + sizeField) % sizeField] + 
-            field[(i - 1 + sizeField) % sizeField][k] + 
-            field[(i - 1 + sizeField) % sizeField][(k + 1 + sizeField) % sizeField] + 
-            field[i][(k - 1 + sizeField) % sizeField] + 
-            field[i][(k + 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][(k - 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][k] + 
-            field[(i + 1 + sizeField) % sizeField][(k + 1 + sizeField) % sizeField];
+            field[(i - 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
+            field[(i - 1 + sizeField) % sizeField][j] + 
+            field[(i - 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField] + 
+            field[i][(j - 1 + sizeField) % sizeField] + 
+            field[i][(j + 1 + sizeField) % sizeField] + 
+            field[(i + 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
+            field[(i + 1 + sizeField) % sizeField][j] + 
+            field[(i + 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField];
 
-            console.log(" i = " + i + " k = " + k, "countAliveNeighbors = " , countAliveNeighbors);
+            //console.log(" i = " + i + " j = " + j, "countAliveNeighbors = " , countAliveNeighbors);
                         
-        if (countAliveNeighbors === 2 || countAliveNeighbors === 3) newField[i][k] = 1;
-        else  newField[i][k] = 0;
+        if (countAliveNeighbors === 2 || countAliveNeighbors === 3) newField[i][j] = 1;
+        else  newField[i][j] = 0;
     } else {
         let countAliveNeighbors = 
-            field[(i - 1 + sizeField) % sizeField][(k - 1 + sizeField) % sizeField] + 
-            field[(i - 1 + sizeField) % sizeField][k] + 
-            field[(i - 1 + sizeField) % sizeField][(k + 1 + sizeField) % sizeField] + 
-            field[i][(k - 1 + sizeField) % sizeField] + 
-            field[i][(k + 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][(k - 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][k] + 
-            field[(i + 1 + sizeField) % sizeField][(k + 1 + sizeField) % sizeField];
+            field[(i - 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
+            field[(i - 1 + sizeField) % sizeField][j] + 
+            field[(i - 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField] + 
+            field[i][(j - 1 + sizeField) % sizeField] + 
+            field[i][(j + 1 + sizeField) % sizeField] + 
+            field[(i + 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
+            field[(i + 1 + sizeField) % sizeField][j] + 
+            field[(i + 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField];
 
-            console.log("-i = " + i + " -k = " + k, "countAliveNeighbors = " , countAliveNeighbors);
+            //console.log("-i = " + i + " -j = " + j, "countAliveNeighbors = " , countAliveNeighbors);
             
-        if (countAliveNeighbors === 3) newField[i][k] = 1;
-        else  newField[i][k] = 0;
+        if (countAliveNeighbors === 3) newField[i][j] = 1;
+        else  newField[i][j] = 0;
     }
 }
 
-function changeLifeCell () {
-    
-}
+const myCanvas = document.getElementById("canvas");
+myCanvas.addEventListener('click', (event) => {
+    // const rect = event.target.getBoundingClientRect();
+    // const x = event.clientX - rect.left;
+    // const y = event.clientY - rect.top;
+    let rect = myCanvas.getBoundingClientRect();
+    let left = rect.left;
+    let top = rect.top;
+    let x = event.clientX - left;
+    let y = event.clientY - top;
+    let column = Math.floor(x / lengthCells);
+    let row = Math.floor(y / lengthCells);
+    if (field[row][column] === 1) field[row][column] = 0;
+    else field[row][column] = 1;
+    drawField();
+});
 
-function setBgColor(input) {
+//MENU
+
+function setBgColor (input) {
     colorCells = input.value;
     drawField();
+}
+
+function  setSize (input) {
+    console.log("SetSize");
+    
+    sizeField = input.value;
+    lengthCells = sizeCanvas / sizeField;    
+    field = [];
+    generateRandomField();
+}
+
+function  setSpeed (input) {
+    stepInterval = stepsInterval[input.value];
+    console.log("stepInterval = " + stepInterval);
+    if (living) {
+        stop();
+        play();
+    }
+}
+//TO DO
+/*const slider = document.getElementById('slider');
+const output = document.getElementById('output');
+      
+slider.addEventListener('input', () => {
+    output.value = slider.value;
+});
+
+output.addEventListener('input', () => {
+    if (output.value >= slider.min && output.value <= slider.max) {
+        slider.value = output.value;
+    }
+});*/
+
+function print () {
+    
+    console.log("======INFO====");
+    console.log("sizeField = " + sizeField);
+    console.log("Field:");
+    console.log(...field);
+    console.log("newField:");
+    console.log(...newField);
+    console.log("===========");
 }
