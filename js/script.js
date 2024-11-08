@@ -39,18 +39,14 @@ function drawField() {
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, sizeCanvas, sizeCanvas);
     context.fillStyle = colorCells;
-
-    for (let i = 0; i < sizeField; i++) {
-        for (let j = 0; j < sizeField; j++) {
-            if (field[i][j] === 1) {
-                context.fillRect(
-                    j * lengthCells,
-                    i * lengthCells,
-                    lengthCells,
-                    lengthCells
-                );
-            }
-        }
+    
+    for (cell of aliveCells) {
+        context.fillRect(
+            cell[0] * lengthCells,
+            cell[1] * lengthCells,
+            lengthCells,
+            lengthCells
+        );
     }
 };
 
@@ -77,12 +73,7 @@ function generateRandomField () {
 function clearField () {
     clearInterval(living);
     living = false;
-    for (let i = 0; i < sizeField; i++) {
-        for (let j = 0; j < sizeField; j++) {
-            field[i][j] = 0;
-        }
-    }
-
+    aliveCells = [];
     drawField();
 }
 
