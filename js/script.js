@@ -3,18 +3,18 @@ let destiny = 0.5;
 let sizeField = 10;
 let sizeCanvas = 750;
 let lengthCells = sizeCanvas / sizeField;
-let field = [];
-let newField = [];
+//let field = [];
+//let newField = [];
+let aliveCells = [];
+let newAliveCells = [];
 let living = false;
 const stepsInterval = [2000, 1000, 500, 250, 125, 60, 40, 20];
 let stepInterval = stepsInterval[3];
 
+
+
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext("2d");
-context.imageSmoothingEnabled = false;
-context.translate(0.5, 0.5);
-context.globalAlpha = 1;
-
 /*window.devicePixelRatio для нахождения соотношения (плотности) физического количества пикселей на устройстве к
 логическому количеству пикселей,  которое браузер использует для отображения содержимого.
 ||1 ИЛИ 1,  используется для того, чтобы задать значение по умолчанию*/
@@ -53,6 +53,7 @@ function drawField() {
         }
     }
 };
+
 
 //Play button
 function play () {
