@@ -95,7 +95,7 @@ function step () {
             checkNeighbors(i, j);
         }
     }
-    
+    //print();
     field = newField.slice();
     drawField();
 }
@@ -105,7 +105,6 @@ function random () {
     console.log("Random");
     
     field = [];
-    newField = [];
     for (let i = 0; i < sizeField; i++) {
         field[i] = []
         for (let j = 0; j < sizeField; j++) {
@@ -118,45 +117,83 @@ function random () {
     }    
 }
 
-function checkNeighbors(i, j) {
-    if (field[i][j] === 1) {
-        let countAliveNeighbors = 
-            field[(i - 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
-            field[(i - 1 + sizeField) % sizeField][j] + 
-            field[(i - 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField] + 
-            field[i][(j - 1 + sizeField) % sizeField] + 
-            field[i][(j + 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][j] + 
-            field[(i + 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField];
-
-            //console.log(" i = " + i + " j = " + j, "countAliveNeighbors = " , countAliveNeighbors);
-                        
-        if (countAliveNeighbors === 2 || countAliveNeighbors === 3) newField[i][j] = 1;
-        else  newField[i][j] = 0;
-    } else {
-        let countAliveNeighbors = 
-            field[(i - 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
-            field[(i - 1 + sizeField) % sizeField][j] + 
-            field[(i - 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField] + 
-            field[i][(j - 1 + sizeField) % sizeField] + 
-            field[i][(j + 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
-            field[(i + 1 + sizeField) % sizeField][j] + 
-            field[(i + 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField];
-
-            //console.log("-i = " + i + " -j = " + j, "countAliveNeighbors = " , countAliveNeighbors);
+// function checkNeighbors(i, j) {
+//         let countAliveNeighbors = 
+//             field[(i - 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
+//             field[(i - 1 + sizeField) % sizeField][j] + 
+//             field[(i - 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField] + 
+//             field[i][(j - 1 + sizeField) % sizeField] + 
+//             field[i][(j + 1 + sizeField) % sizeField] + 
+//             field[(i + 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField] + 
+//             field[(i + 1 + sizeField) % sizeField][j] + 
+//             field[(i + 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField];
+//     if (field[i][j] === 1) {
+//             console.log(" i = " + i + " j = " + j, "countAliveNeighbors = " , countAliveNeighbors);
+//             console.log("i = " + i);
+//             console.log("i - 1 = " + (i - 1));
+//             console.log("sF = " + sizeField);
             
-        if (countAliveNeighbors === 3) newField[i][j] = 1;
-        else  newField[i][j] = 0;
-    }
+//             console.log("i - 1 + sF = " + (i - 1 + sizeField) );
+            
+//             console.log((i - 1 + sizeField) );
+//             console.log((j - 1 + sizeField) );
+            
+//             console.log(field[(i - 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField]);
+//             console.log(field[(i - 1 + sizeField) % sizeField][j]);
+//             console.log(field[(i - 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField]);
+//             console.log(field[i][(j - 1 + sizeField) % sizeField]);
+//             console.log(field[i][(j + 1 + sizeField) % sizeField]);
+//             console.log(field[(i + 1 + sizeField) % sizeField][(j - 1 + sizeField) % sizeField]);
+//             console.log(field[(i + 1 + sizeField) % sizeField][j]);
+//             console.log(field[(i + 1 + sizeField) % sizeField][(j + 1 + sizeField) % sizeField]);
+            
+            
+            
+                        
+//         if (countAliveNeighbors === 2 || countAliveNeighbors === 3) {newField[i][j] = 1;
+//             console.log("+ => +");
+            
+//         } 
+//         else  {
+//             newField[i][j] = 0;
+//             console.log("+ => -");
+//         }
+//     } else {
+//             //console.log("-i = " + i + " -j = " + j, "countAliveNeighbors = " , countAliveNeighbors);
+            
+//         if (countAliveNeighbors === 3) {
+//             newField[i][j] = 1;
+//             console.log("- => +");
+//         }
+//         else  {
+//             newField[i][j] = 0;
+//             console.log("- => -");
+//         }
+//     }
+// }
+function checkNeighbors(i, j) {
+    const up = (i - 1 + sizeField) % sizeField;
+    const down = (i + 1 + sizeField) % sizeField;
+    const left = (j - 1 + sizeField) % sizeField;
+    const right = (j + 1 + sizeField) % sizeField;
+
+
+    let countAliveNeighbors = 
+        field[up][left] + 
+        field[up][j] + 
+        field[up][right] + 
+        field[i][left] + 
+        field[i][right] + 
+        field[down][left] + 
+        field[down][j] + 
+        field[down][right];
+    if (field[i][j] === 1) newField[i][j] = (countAliveNeighbors === 2 || countAliveNeighbors === 3) ? 1 : 0;
+    else newField[i][j] = (countAliveNeighbors === 3) ? 1 : 0;
 }
+
 
 const myCanvas = document.getElementById("canvas");
 myCanvas.addEventListener('click', (event) => {
-    // const rect = event.target.getBoundingClientRect();
-    // const x = event.clientX - rect.left;
-    // const y = event.clientY - rect.top;
     let rect = myCanvas.getBoundingClientRect();
     let left = rect.left;
     let top = rect.top;
@@ -179,9 +216,9 @@ function setBgColor (input) {
 function  setSize (input) {
     console.log("SetSize");
     
-    sizeField = input.value;
-    lengthCells = sizeCanvas / sizeField;    
-    field = [];
+    sizeField = Number(input.value);
+    lengthCells = sizeCanvas / sizeField;
+
     generateRandomField();
 }
 
@@ -216,4 +253,12 @@ function print () {
     console.log("newField:");
     console.log(...newField);
     console.log("===========");
+}
+
+function print1 () {
+    for (let i = 0; i < sizeField; i++) {
+        for (let j = 0; j < sizeField; j++) {
+            if(field[i][j] === 1) console.log(" i = " + i + " j = " + j, "isLive = " + field[i][j])
+        }
+    }   
 }
