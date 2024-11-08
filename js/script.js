@@ -245,7 +245,6 @@ output.addEventListener('input', () => {
 });*/
 
 function print () {
-    
     console.log("======INFO====");
     console.log("sizeField = " + sizeField);
     console.log("Field:");
