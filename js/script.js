@@ -39,7 +39,7 @@ generateRandomField();
 function drawField() {
     console.log("drawField");
     for (cell of changedCells) {
-        
+        //ERROR 
         if (aliveCells.has(cell)) {
             context.fillStyle = colorCells;
         } else context.fillStyle = "#ffffff";
