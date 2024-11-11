@@ -5,8 +5,9 @@ let sizeCanvas = 750;
 let lengthCells = sizeCanvas / sizeField;
 //let field = [];
 //let newField = [];
-let aliveCells = [];
-let newAliveCells = [];
+let aliveCells = new Set();
+let newAliveCells = new Set();
+let changedCells = new Set();
 let living = false;
 const stepsInterval = [2000, 1000, 500, 250, 125, 60, 40, 20];
 let stepInterval = stepsInterval[3];
@@ -36,11 +37,14 @@ generateRandomField();
 
 // Рисуем
 function drawField() {
-    context.fillStyle = "#ffffff";
-    context.fillRect(0, 0, sizeCanvas, sizeCanvas);
-    context.fillStyle = colorCells;
-    
-    for (cell of aliveCells) {
+    console.log("drawField");
+    for (cell of changedCells) {
+        
+        if (aliveCells.has(cell)) {
+            context.fillStyle = colorCells;
+        } else context.fillStyle = "#ffffff";
+        
+        // console.log(cell[0], cell[1]);
         context.fillRect(
             cell[0] * lengthCells,
             cell[1] * lengthCells,
@@ -48,65 +52,64 @@ function drawField() {
             lengthCells
         );
     }
+    changedCells.clear();
 };
 
 
 //Play button
 function play () {
-    console.log("Play\n");    
+    console.log("Play");
     if (!living) living = setInterval(step, stepInterval);
 }
 
 //Stop button
 function stop () {
-    console.log("Stop\n");
+    console.log("Stop");
     clearInterval(living);
     living = false;
 }
 
 function generateRandomField () {
-    stop();
+    console.log("generateRandomField");
+    clearField();
     random();
-    drawField();
+    drawField();    
 }
 
 function clearField () {
-    clearInterval(living);
-    living = false;
-    aliveCells = [];
-    drawField();
+    console.log("clearField");
+    stop();
+    aliveCells.clear();
+    changedCells.clear();
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, sizeCanvas, sizeCanvas);
+    //drawField();
 }
 
 //step
 function step () {
     console.log("Step");
-    
-    for (let i = 0; i < sizeField; i++) {
-        newField[i] = [];
-        for (let j = 0; j < sizeField; j++) {
-            checkNeighbors(i, j);
-        }
+    newAliveCells.clear();
+    for (const cell of aliveCells) {
+        checkNeighbors(cell[0], cell[1]);
     }
-    //print();
-    field = newField.slice();
+    aliveCells = new Set(newAliveCells);
     drawField();
 }
 
 //Make random field
 function random () {
     console.log("Random");
-    
-    field = [];
     for (let i = 0; i < sizeField; i++) {
-        field[i] = []
         for (let j = 0; j < sizeField; j++) {
             if (Math.random() < destiny) {
-                field[i][j] = 1;
+                console.log("add");
+                aliveCells.add([i, j]);
+                changedCells.add([i, j]);
             } else {
-                field[i][j] = 0;
             }
         }
-    }    
+    }
 }
 
 // function checkNeighbors(i, j) {
@@ -170,17 +173,26 @@ function checkNeighbors(i, j) {
     const right = (j + 1 + sizeField) % sizeField;
 
 
-    let countAliveNeighbors = 
-        field[up][left] + 
-        field[up][j] + 
-        field[up][right] + 
-        field[i][left] + 
-        field[i][right] + 
-        field[down][left] + 
-        field[down][j] + 
-        field[down][right];
-    if (field[i][j] === 1) newField[i][j] = (countAliveNeighbors === 2 || countAliveNeighbors === 3) ? 1 : 0;
-    else newField[i][j] = (countAliveNeighbors === 3) ? 1 : 0;
+    let countAliveNeighbors = 0;
+    if (aliveCells.has([up, left])) countAliveNeighbors++;
+    if (aliveCells.has([up, i])) countAliveNeighbors++;
+    if (aliveCells.has([up, right])) countAliveNeighbors++;
+    if (aliveCells.has([j, left])) countAliveNeighbors++;
+    if (aliveCells.has([j, right])) countAliveNeighbors++;
+    if (aliveCells.has([down, left])) countAliveNeighbors++;
+    if (aliveCells.has([down, i])) countAliveNeighbors++;
+    if (aliveCells.has([down, right])) countAliveNeighbors++;
+
+    if (aliveCells.has([i, j])) {
+        if ((countAliveNeighbors === 2 || countAliveNeighbors === 3)) {
+            newAliveCells.add([i, j]);
+        } else {
+            changedCells.add([i, j]);
+        }
+    } else if (countAliveNeighbors === 3) {
+        newAliveCells.add([i, j]);
+        changedCells.add([i, j]);
+    }
 }
 
 
@@ -210,7 +222,8 @@ function  setSize (input) {
     
     sizeField = Number(input.value);
     lengthCells = sizeCanvas / sizeField;
-
+    console.log(sizeField);
+    
     generateRandomField();
 }
 
