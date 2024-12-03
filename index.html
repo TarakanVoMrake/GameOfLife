@@ -12,7 +12,7 @@
     </header>
     <section class = "container">
         <div class = "canvas">
-            <canvas id="canvas" width="500" height="500"></canvas>
+            <canvas id="canvas" width="750" height="750"></canvas>
         </div>
         <div class = "menu-parameter">
             <div class="menu">
@@ -22,11 +22,12 @@
                     <input type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
                 </div>
                 <div class="setting" id = "size-field">
-                    <label for="slider">Size:</label>
-                    <input type="range" min="5" max="200" step="1" value="20" oninput="setSize(this)">
+                    <label for="slider">Size :</label>
+                    <input type="range" min="5" max="200" step="1" value="10" oninput="setSize(this)">
+                    <input type="number" min="5" max="200" step="1" value="10" oninput="setSize(this)">
                 </div>
                 <div class="setting" id = "interval-cell">
-                    <label for="slider">Speed:</label>
+                    <label for="slider">Speed :</label>
                     <input type="range" min="0" max="7" step="1" value="3" oninput="setSpeed(this)">
                 </div>
                 <!-- TO DO -->
@@ -34,15 +35,14 @@
                     <input type="range" id="slider" min="1" max="10" step="1" value="1">
                     <input type="number" id="output" min="1" max="10" step="1" value="1">
                 </div> -->
-
             </div>
             <div class = "buttons">
                 <button onclick="play()">Play</button>
                 <button onclick="stop()">Stop</button>
                 <button onclick="generateRandomField()">Random</button>
                 <button onclick="clearField()" class="">Clear</button>
-                <!-- <button onclick="print()">Info</button>
-                <button onclick="print1()">Info2</button> -->
+                <button onclick="print()">Info</button>
+                <button onclick="print1()">Info2</button>
             </div>
         </div>
     </section>
