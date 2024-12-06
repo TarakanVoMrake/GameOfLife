@@ -92,8 +92,9 @@ function drawField() {
                 lengthCells
             );
         }
-    }*/
+    }
     changedCells.clear();
+    */
 };
 
 
@@ -123,8 +124,9 @@ function random () {
     for (let i = 0; i < sizeField; i++) {
         for (let j = 0; j < sizeField; j++) {
             if (Math.random() < destiny) {
-                aliveCells.add([i, j].join(","));
-                changedCells.add([i, j].join(","));
+                aliveCells.add(arrToStr(i, j));
+                
+                //changedCells.add(arrToStr(i, j));
             } else {
             }
         }
@@ -135,7 +137,7 @@ function clearField () {
     console.log("clearField");
     stop();
     aliveCells.clear();
-    changedCells.clear();
+    //changedCells.clear();
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, sizeCanvas, sizeCanvas);
 }
@@ -155,55 +157,49 @@ function step () {
 
 function findPotentialСells() {
     potentialСells.clear();
-
+    
     for (cell of aliveCells) {
         const cell_ = strToArr(cell);
-        const left = (cell_[0] - 1 + sizeField) % sizeField;
-        const right = (cell_[0] + 1 + sizeField) % sizeField;
-        const up = (cell_[1] - 1 + sizeField) % sizeField;
-        const down = (cell_[1] + 1 + sizeField) % sizeField;
-
-
-        potentialСells.add([left,       up].join(','));
-        potentialСells.add([left,       cell_[1]].join(','));
-        potentialСells.add([left,       down].join(','));
-        potentialСells.add([cell_[0],   up].join(','));
-        potentialСells.add([cell_[0],   cell_[1]].join(','));
-        potentialСells.add([cell_[0],   down].join(','));
-        potentialСells.add([right,      up].join(','));
-        potentialСells.add([right,      cell_[1]].join(','));
-        potentialСells.add([right,      down].join(','));
+        potentialСells.add(arrToStr(cell_[0], cell_[1]));
+        
+        for (const [x, y] of getNeighbors(cell_[0], cell_[1], sizeField)) potentialСells.add(arrToStr(x, y));
     }
 }
 
 function checkNeighbors(i, j) {
-    const left = (i - 1 + sizeField) % sizeField;    
-    const right = (i + 1 + sizeField) % sizeField;
-    const up = (j - 1 + sizeField) % sizeField;
-    const down = (j + 1 + sizeField) % sizeField;
-
     let countAliveNeighbors = 0;
-    if (aliveCells.has([left,     up].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([left,     j].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([left,     down].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([i,      up].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([i,      down].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([right,   up].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([right,   j].join(','))) countAliveNeighbors++;
-    if (aliveCells.has([right,   down].join(','))) countAliveNeighbors++;
+    for (const [x, y] of getNeighbors(i, j, sizeField)) {
+        if (aliveCells.has(arrToStr(x, y))) countAliveNeighbors++;
+    }
 
-
-    const cell = [i, j].join(',');    
+    const cell = arrToStr(i, j);    
     if (aliveCells.has(cell)) {
         if ((countAliveNeighbors === 2 || countAliveNeighbors === 3)) {
             newAliveCells.add(cell);
         } else {
-            changedCells.add(cell);
+            //changedCells.add(cell);
         }
     } else if (countAliveNeighbors === 3) {
         newAliveCells.add(cell);
-        changedCells.add(cell);
+        //changedCells.add(cell);
     }
+}
+
+function getNeighbors(i, j, size) {
+    const left = (i - 1 + size) % size;
+    const right = (i + 1 + size) % size;
+    const up = (j - 1 + size) % size;
+    const down = (j + 1 + size) % size;
+    return [
+            [left, up],
+            [left, j],
+            [left, down],
+            [i, up],
+            [i, down],
+            [right, up], 
+            [right, j],
+            [right, down]
+    ];
 }
 
 const myCanvas = document.getElementById("canvas");
@@ -215,12 +211,12 @@ myCanvas.addEventListener('click', (event) => {
     let y = event.clientY - top;
     let row = Math.floor(y / lengthCells);
     let column = Math.floor(x / lengthCells);
-    const cell_ = [column, row].join(",");
+    const cell_ = arrToStr(column, row);
 
     if (!aliveCells.delete(cell_)) {
         aliveCells.add(cell_);
     }
-    changedCells.add(cell_);    
+    //changedCells.add(cell_);    
     drawField();
 });
 
@@ -272,3 +268,25 @@ function print () {
 function strToArr (cell) {
     return cell.split(",").map(Number);
 }
+
+function arrToStr (column, row) {
+    return [column, row].join(",");
+}
+
+
+const openButton = document.getElementById('openRules');
+const closeButton = document.getElementById('closeRules');
+const modal = document.getElementById('rules');
+  
+
+openButton.addEventListener('click', () => {
+    modal.style.display = 'flex';
+});
+closeButton.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+window.addEventListener('click', (event) => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+});

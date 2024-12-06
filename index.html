@@ -10,42 +10,53 @@
     <header class = "bar">
         <h1>GAME OF LIFE</h1>
     </header>
-    <section class = "container">
-        <div class = "canvas">
-            <canvas id="canvas" width="750" height="750"></canvas>
+    <div class = "container">
+        <div class = "container">
+            <div class = "canvas">
+                <canvas id="canvas" width="750" height="750"></canvas>
+            </div>
         </div>
-        <div class = "menu-parameter">
+        <div class = "container side-bar">
             <div class="menu">
                 <h2>MENU</h2>
                 <div class="setting" id = "color-cell">
-                    <label for="color">Cell color :  </label>
+                    <label for="color" class="setting-name">Cell color :  </label>
                     <input type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
                 </div>
                 <div class="setting" id = "size-field">
-                    <label for="slider">Size :</label>
+                    <label for="slider" class="setting-name">Size :</label>
                     <input type="range" min="5" max="200" step="1" value="10" oninput="setSize(this)">
                     <input type="number" min="5" max="200" step="1" value="10" oninput="setSize(this)">
                 </div>
                 <div class="setting" id = "interval-cell">
-                    <label for="slider">Speed :</label>
+                    <label for="slider" class="setting-name">Speed :</label>
                     <input type="range" min="0" max="7" step="1" value="3" oninput="setSpeed(this)">
                 </div>
-                <!-- TO DO -->
-                <!-- <div class="setting" id = "interval-cell">
-                    <input type="range" id="slider" min="1" max="10" step="1" value="1">
-                    <input type="number" id="output" min="1" max="10" step="1" value="1">
-                </div> -->
             </div>
             <div class = "buttons">
                 <button onclick="play()">Play</button>
                 <button onclick="stop()">Stop</button>
                 <button onclick="generateRandomField()">Random</button>
                 <button onclick="clearField()" class="">Clear</button>
-                <button onclick="print()">Info</button>
-                <button onclick="print1()">Info2</button>
+                <button id="openRules">Rules</button>
+                <!-- <button onclick="print()">Info</button> -->
             </div>
         </div>
-    </section>
+    </div>
+    <div class="modal" id="rules">
+        <div class="rules">
+            <span class="close-button" id="closeRules">&times;</span>
+            <h2>Rules</h2>
+            <p> The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells. Each cell is in one of two possible states: <strong>alive</strong> or <strong>dead</strong> (also called <strong>populated</strong> or <strong>unpopulated</strong>).</p>
+            <p> Every cell interacts with its eight neighbors: the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:</p>
+            <ul>
+                <li>Any live cell with fewer than two live neighbors dies, as if by solitude.</li>
+                <li>Any live cell with more than three live neighbors dies, as if by overpopulation.</li>
+                <li>Any live cell with two or three live neighbors lives on to the next generation.</li>
+                <li>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
+            </ul>
+        </div>
+      </div>
     <script src="./js/script.js"></script>
 </body>
 </html> 
