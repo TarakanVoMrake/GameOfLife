@@ -17,8 +17,8 @@
             </div>
         </div>
         <div class = "container side-bar">
-            <div class="menu">
-                <h2>MENU</h2>
+            <div class="side-panel settings-panel">
+                <h2>Settings</h2>
                 <div class="setting" id = "color-cell">
                     <label for="color" class="setting-name">Cell color :  </label>
                     <input type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
@@ -33,13 +33,37 @@
                     <input type="range" min="0" max="7" step="1" value="3" oninput="setSpeed(this)">
                 </div>
             </div>
-            <div class = "buttons">
-                <button onclick="play()">Play</button>
+            <div class="side-panel info-panel">
+                <h2>Info</h2>
+                <div class="info">
+                    <span>Field size:</span>
+                    <span class="" id="field-size"></span>
+                </div>
+                <div class="info">
+                    <span>Amount alive cells:</span>
+                    <span class="" id="alive-cells"></span>
+                    <span>out of</span>
+                    <span class="" id="total-cells"></span>
+                </div>
+                <div class="info">
+                    <span>Percentage alive cells:</span>
+                    <span class="" id="percentage-alive-cells"></span>
+                </div>
+                <div class="info">
+                    <span>Current step:</span>
+                    <span class="" id="current-step">0</span>
+                </div>
+            </div>
+            <div class = "side-panel buttons-panel">
+                <!-- <h2>Buttons</h2> -->
+                <div>
+                    <button onclick="play()">Play</button>
                 <button onclick="stop()">Stop</button>
                 <button onclick="generateRandomField()">Random</button>
                 <button onclick="clearField()" class="">Clear</button>
                 <button id="openRules">Rules</button>
                 <!-- <button onclick="print()">Info</button> -->
+                </div>
             </div>
         </div>
     </div>

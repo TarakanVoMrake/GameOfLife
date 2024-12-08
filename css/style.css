@@ -48,27 +48,33 @@ h1 {
     width: 600px;
 }
 
-/* MENU Style*/
+/* side-bar Style*/
 .side-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.side-bar h2 {
+    margin: 0;
+    text-align: center;
+    color: #333333;
+}
+
+.side-panel {
     width: 450px;
     padding: 20px;
     background-color: #f9f9f9;
 
-    display: flex;
+    /* display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; */
 
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.menu-parameter h2 {
-    text-align: center;
-    color: #333333;
-}
-
-.menu {
-    padding: 15px 0;
+.settings-panel {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -105,13 +111,13 @@ h1 {
 }
 
 /* BUTTONS Style*/
-.buttons {
+.buttons-panel {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 10px;
 }
-.buttons button {
+.buttons-panel button {
     padding: 10px 20px;
     border-radius: 5px;
 
