@@ -1,5 +1,5 @@
 let colorCells = "#222222";
-let destiny = 0.5;
+let density = 0.5;
 let sizeField = 10;
 let totalCells = sizeField ** 2;
 let sizeCanvas = 600;
@@ -134,7 +134,7 @@ function random () {
     currentStep = 0;
     for (let i = 0; i < sizeField; i++) {
         for (let j = 0; j < sizeField; j++) {
-            if (Math.random() < destiny) {
+            if (Math.random() < density) {
                 aliveCells.add(arrToStr(i, j));
                 
                 //changedCells.add(arrToStr(i, j));
@@ -313,20 +313,17 @@ function arrToStr (column, row) {
     return [column, row].join(",");
 }
 
-
-const openButton = document.getElementById('openRules');
 const closeButton = document.getElementById('closeRules');
 const modal = document.getElementById('rules');
-  
 
-openButton.addEventListener('click', () => {
+function openRules() {
     modal.style.display = 'flex';
-});
-closeButton.addEventListener('click', () => {
+}
+
+function closeRules() {
     modal.style.display = 'none';
-});
+}
+
 window.addEventListener('click', (event) => {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
+      if (event.target === modal) closeRules();
 });
