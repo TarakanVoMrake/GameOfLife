@@ -6,13 +6,11 @@ let sizeCanvas = 600;
 let lengthCells = sizeCanvas / sizeField;
 let aliveCells = new Set();
 let newAliveCells = new Set();
-//let changedCells = new Set();
 let potentialCells = new Set();
 let living = false;
 const stepsInterval = [2000, 1000, 500, 250, 125, 60, 40, 20];
 let stepInterval= stepsInterval[3];
 let currentStep = 0;
-
 
 
 let fieldSizeInfo = document.getElementById("field-size");
@@ -68,43 +66,6 @@ function drawField() {
         );
     }
     updateAllInfo();
-    /*for (cell of changedCells) {
-        context.fillStyle = aliveCells.has(cell) ? colorCells : "#ffffff";
-        const cell_ = strToArr(cell);
-
-        context.fillRect(
-            cell_[0] * lengthCells,
-            cell_[1] * lengthCells,
-            lengthCells,
-            lengthCells
-        );
-
-        // context.fillRect(
-        //     Math.floor(cell_[0] * lengthCells),
-        //     Math.floor(cell_[1] * lengthCells),
-        //     Math.ceil(lengthCells),
-        //     Math.ceil(lengthCells)
-        // );
-        const cell_ = strToArr(cell);
-        context.fillStyle = colorCells;
-        if (aliveCells.has(cell)) {
-            context.fillRect(
-                cell_[0] * lengthCells,
-                cell_[1] * lengthCells,
-                lengthCells,
-                lengthCells
-            );
-        } else {
-            context.clearRect(
-                cell_[0] * lengthCells,
-                cell_[1] * lengthCells,
-                lengthCells,
-                lengthCells
-            );
-        }
-    }
-    changedCells.clear();
-    */
 };
 
 
@@ -121,6 +82,7 @@ function stop () {
     living = false;
 }
 
+//Make random field
 function generateRandomField () {
     console.log("generateRandomField");
     clearField();
@@ -128,7 +90,6 @@ function generateRandomField () {
     drawField();    
 }
 
-//Make random field
 function random () {
     console.log("Random");
     currentStep = 0;
@@ -136,9 +97,6 @@ function random () {
         for (let j = 0; j < sizeField; j++) {
             if (Math.random() < density) {
                 aliveCells.add(arrToStr(i, j));
-                
-                //changedCells.add(arrToStr(i, j));
-            } else {
             }
         }
     }
@@ -149,7 +107,6 @@ function clearField () {
     currentStep = 0;
     stop();
     aliveCells.clear();
-    //changedCells.clear();
     context.fillStyle = "#ffffff";
     context.fillRect(0, 0, sizeCanvas, sizeCanvas);
 }
@@ -189,12 +146,9 @@ function checkNeighbors(i, j) {
     if (aliveCells.has(cell)) {
         if ((countAliveNeighbors === 2 || countAliveNeighbors === 3)) {
             newAliveCells.add(cell);
-        } else {
-            //changedCells.add(cell);
         }
     } else if (countAliveNeighbors === 3) {
         newAliveCells.add(cell);
-        //changedCells.add(cell);
     }
 }
 
@@ -215,6 +169,8 @@ function getNeighbors(i, j, size) {
     ];
 }
 
+
+//INFOs
 function updateAllInfo () {
     updateSizeInfo();
     updateAmountAliveInfo();
@@ -293,17 +249,17 @@ function  setSpeed (input) {
     }
 }
 
-function print () {
-    console.log("======INFO====");
-    console.log("sizeField = " + sizeField);
-    console.log("aliveCells:");
-    console.log(...aliveCells);
-    console.log("newAliveCells:");
-    console.log(...newAliveCells);
-    console.log("potentialCells:");
-    console.log(...potentialCells);
-    console.log("===========");
-}
+// function print () {
+//     console.log("======INFO====");
+//     console.log("sizeField = " + sizeField);
+//     console.log("aliveCells:");
+//     console.log(...aliveCells);
+//     console.log("newAliveCells:");
+//     console.log(...newAliveCells);
+//     console.log("potentialCells:");
+//     console.log(...potentialCells);
+//     console.log("===========");
+// }
 
 function strToArr (cell) {
     return cell.split(",").map(Number);
@@ -313,6 +269,7 @@ function arrToStr (column, row) {
     return [column, row].join(",");
 }
 
+// RULES
 const closeButton = document.getElementById('closeRules');
 const modal = document.getElementById('rules');
 
