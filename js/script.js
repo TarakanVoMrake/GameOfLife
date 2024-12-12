@@ -1,16 +1,25 @@
 let colorCells = "#222222";
-let destiny = 0.5;
+let density = 0.5;
 let sizeField = 10;
+let totalCells = sizeField ** 2;
 let sizeCanvas = 600;
 let lengthCells = sizeCanvas / sizeField;
 let aliveCells = new Set();
 let newAliveCells = new Set();
-let changedCells = new Set();
-let potentialСells = new Set();
+//let changedCells = new Set();
+let potentialCells = new Set();
 let living = false;
 const stepsInterval = [2000, 1000, 500, 250, 125, 60, 40, 20];
 let stepInterval= stepsInterval[3];
+let currentStep = 0;
 
+
+
+let fieldSizeInfo = document.getElementById("field-size");
+let amountAliveCellsInfo = document.getElementById("alive-cells");
+let totalCellsInfo = document.getElementById("total-cells");
+let percentageAliveCellsInfo = document.getElementById("percentage-alive-cells");
+let currentStepInfo = document.getElementById("current-step");
 
 
 const canvas = document.getElementById('canvas');
@@ -58,6 +67,7 @@ function drawField() {
             lengthCells
         );
     }
+    updateAllInfo();
     /*for (cell of changedCells) {
         context.fillStyle = aliveCells.has(cell) ? colorCells : "#ffffff";
         const cell_ = strToArr(cell);
@@ -121,9 +131,10 @@ function generateRandomField () {
 //Make random field
 function random () {
     console.log("Random");
+    currentStep = 0;
     for (let i = 0; i < sizeField; i++) {
         for (let j = 0; j < sizeField; j++) {
-            if (Math.random() < destiny) {
+            if (Math.random() < density) {
                 aliveCells.add(arrToStr(i, j));
                 
                 //changedCells.add(arrToStr(i, j));
@@ -135,6 +146,7 @@ function random () {
 
 function clearField () {
     console.log("clearField");
+    currentStep = 0;
     stop();
     aliveCells.clear();
     //changedCells.clear();
@@ -145,9 +157,10 @@ function clearField () {
 //step
 function step () {
     console.log("Step");
-    findPotentialСells();    
+    currentStep++;
+    findPotentialCells();    
     newAliveCells.clear();
-    for (const cell of potentialСells) {
+    for (const cell of potentialCells) {
         const cell_ = strToArr(cell);
         checkNeighbors(cell_[0], cell_[1]);
     }
@@ -155,14 +168,14 @@ function step () {
     drawField();
 }
 
-function findPotentialСells() {
-    potentialСells.clear();
+function findPotentialCells() {
+    potentialCells.clear();
     
     for (cell of aliveCells) {
         const cell_ = strToArr(cell);
-        potentialСells.add(arrToStr(cell_[0], cell_[1]));
+        potentialCells.add(arrToStr(cell_[0], cell_[1]));
         
-        for (const [x, y] of getNeighbors(cell_[0], cell_[1], sizeField)) potentialСells.add(arrToStr(x, y));
+        for (const [x, y] of getNeighbors(cell_[0], cell_[1], sizeField)) potentialCells.add(arrToStr(x, y));
     }
 }
 
@@ -202,6 +215,33 @@ function getNeighbors(i, j, size) {
     ];
 }
 
+function updateAllInfo () {
+    updateSizeInfo();
+    updateAmountAliveInfo();
+    updatePercentageInfo();
+    updateCurrentStepInfo();
+}
+
+function updateSizeInfo() {
+    fieldSizeInfo.innerHTML = `${sizeField}x${sizeField}`;
+}
+
+function updateAmountAliveInfo() {
+    totalCells = sizeField ** 2;
+    amountAliveCellsInfo.innerHTML = aliveCells.size;
+    totalCellsInfo.innerHTML = totalCells;
+}
+
+function updatePercentageInfo() {
+    let percentageAliveCells = (aliveCells.size / totalCells) * 100;
+    percentageAliveCellsInfo.innerHTML = `${parseFloat(percentageAliveCells.toFixed(3))}%`;
+}
+
+function updateCurrentStepInfo() {
+    currentStepInfo.innerHTML = currentStep;
+}
+
+//Draw Cells
 const myCanvas = document.getElementById("canvas");
 myCanvas.addEventListener('click', (event) => {
     let rect = myCanvas.getBoundingClientRect();
@@ -260,8 +300,8 @@ function print () {
     console.log(...aliveCells);
     console.log("newAliveCells:");
     console.log(...newAliveCells);
-    console.log("potentialСells:");
-    console.log(...potentialСells);
+    console.log("potentialCells:");
+    console.log(...potentialCells);
     console.log("===========");
 }
 
@@ -273,20 +313,17 @@ function arrToStr (column, row) {
     return [column, row].join(",");
 }
 
-
-const openButton = document.getElementById('openRules');
 const closeButton = document.getElementById('closeRules');
 const modal = document.getElementById('rules');
-  
 
-openButton.addEventListener('click', () => {
+function openRules() {
     modal.style.display = 'flex';
-});
-closeButton.addEventListener('click', () => {
+}
+
+function closeRules() {
     modal.style.display = 'none';
-});
+}
+
 window.addEventListener('click', (event) => {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
+      if (event.target === modal) closeRules();
 });

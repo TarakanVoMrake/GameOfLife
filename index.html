@@ -10,18 +10,16 @@
     <header class = "bar">
         <h1>GAME OF LIFE</h1>
     </header>
-    <div class = "container">
-        <div class = "container">
-            <div class = "canvas">
-                <canvas id="canvas" width="750" height="750"></canvas>
-            </div>
+    <div class = "main container">
+        <div class = "container canvas">
+            <canvas id="canvas" width="750" height="750"></canvas>
         </div>
         <div class = "container side-bar">
-            <div class="menu">
-                <h2>MENU</h2>
+            <div class="side-panel settings-panel">
+                <h2>Settings</h2>
                 <div class="setting" id = "color-cell">
-                    <label for="color" class="setting-name">Cell color :  </label>
-                    <input type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
+                    <label for="color-input" class="setting-name">Cell color :  </label>
+                    <input id="color-input" type="color" name="color" value="#222222" class="color-input" oninput="setBgColor(this)">
                 </div>
                 <div class="setting" id = "size-field">
                     <label for="slider" class="setting-name">Size :</label>
@@ -32,22 +30,52 @@
                     <label for="slider" class="setting-name">Speed :</label>
                     <input type="range" min="0" max="7" step="1" value="3" oninput="setSpeed(this)">
                 </div>
+                <!-- <div class="setting" id = "cell-density">
+                    <label for="slider" class="setting-name">Cell density :</label>
+                    <input type="range" min="0" max="7" step="1" value="3" oninput="setSpeed(this)">
+                </div> -->
             </div>
-            <div class = "buttons">
+            <div class="side-panel info-panel">
+                <h2>Info</h2>
+                <div class="info">
+                    <span class="info-name">Field size:</span>
+                    <span class="" id="field-size"></span>
+                </div>
+                <div class="info">
+                    <span class="info-name">Amount alive cells:</span>
+                    <span class="" id="alive-cells"></span>
+                    <span>out of</span>
+                    <span class="" id="total-cells"></span>
+                </div>
+                <div class="info">
+                    <span class="info-name">Percentage alive cells:</span>
+                    <span class="" id="percentage-alive-cells"></span>
+                </div>
+                <div class="info">
+                    <span class="info-name">Current step:</span>
+                    <span class="" id="current-step">0</span>
+                </div>
+            </div>
+            <div class = "side-panel play-buttons-panel">
+                <!-- <h2>Buttons</h2> -->
                 <button onclick="play()">Play</button>
                 <button onclick="stop()">Stop</button>
                 <button onclick="generateRandomField()">Random</button>
                 <button onclick="clearField()" class="">Clear</button>
-                <button id="openRules">Rules</button>
                 <!-- <button onclick="print()">Info</button> -->
             </div>
         </div>
     </div>
+    <div class="container menu-buttons-panel">
+        <button id="openRules" onclick="openRules()">Rules</button>
+        <!-- <button>123</button>
+        <button>456</button> -->
+    </div>
     <div class="modal" id="rules">
         <div class="rules">
-            <span class="close-button" id="closeRules">&times;</span>
+            <span class="close-button" id="closeRules" onclick="closeRules()">&times;</span>
             <h2>Rules</h2>
-            <p> The universe of the Game of Life is an infinite, two-dimensional orthogonal grid of square cells. Each cell is in one of two possible states: <strong>alive</strong> or <strong>dead</strong> (also called <strong>populated</strong> or <strong>unpopulated</strong>).</p>
+            <p> The universe of the Game of Life is two-dimensional orthogonal grid of square cells. Each cell is in one of two possible states: <strong>alive</strong> or <strong>dead</strong> (also called <strong>populated</strong> or <strong>unpopulated</strong>).</p>
             <p> Every cell interacts with its eight neighbors: the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:</p>
             <ul>
                 <li>Any live cell with fewer than two live neighbors dies, as if by solitude.</li>
