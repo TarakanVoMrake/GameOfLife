@@ -40,9 +40,9 @@ canvas.style.height = `${sizeCanvas}px`;
 context.scale(dpr, dpr);
 context.lineWidth = 1;
 
+
+
 generateRandomField();
-
-
 
 // Рисуем
 function drawField() {
@@ -82,12 +82,22 @@ function stop () {
     living = false;
 }
 
-//Make random field
+//Random button
 function generateRandomField () {
     console.log("generateRandomField");
     clearField();
     random();
     drawField();    
+}
+
+//Clear button
+function clearField () {
+    console.log("clearField");
+    currentStep = 0;
+    stop();
+    aliveCells.clear();
+    context.fillStyle = "#ffffff";
+    context.fillRect(0, 0, sizeCanvas, sizeCanvas);
 }
 
 function random () {
@@ -100,15 +110,6 @@ function random () {
             }
         }
     }
-}
-
-function clearField () {
-    console.log("clearField");
-    currentStep = 0;
-    stop();
-    aliveCells.clear();
-    context.fillStyle = "#ffffff";
-    context.fillRect(0, 0, sizeCanvas, sizeCanvas);
 }
 
 //step
@@ -170,7 +171,7 @@ function getNeighbors(i, j, size) {
 }
 
 
-//INFOs
+//INFO
 function updateAllInfo () {
     updateSizeInfo();
     updateAmountAliveInfo();
@@ -216,8 +217,7 @@ myCanvas.addEventListener('click', (event) => {
     drawField();
 });
 
-//MENU
-
+//Settings
 function setBgColor (input) {
     colorCells = input.value;
     drawField();
