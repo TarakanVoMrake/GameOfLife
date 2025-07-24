@@ -35,6 +35,6 @@ User interaction and UI design
 Using localStorage to persist data
 React or canvas-based version
 
-🧠 About Me
+## 🧠 About Me
 My name is Nguyen Minh Vu. I’m passionate about math, programming, and game development.
 This is one of my first web projects and I’m excited to keep learning!
